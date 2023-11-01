@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:theme_freight_ui/src/page/home.dart';
+import 'package:theme_freight_ui/src/common/home.dart';
 import 'package:theme_freight_ui/src/theme/colors.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +17,11 @@ class App extends StatelessWidget {
       title: 'flutter demo',
       theme: lightMode,
       darkTheme: darkMode,
-
-      // login
-
       home: const Home(),
     );
   }
+  
+
 }
 
 ThemeData lightMode = ThemeData(
@@ -27,6 +32,11 @@ ThemeData lightMode = ThemeData(
     titleSmall: TextStyle(color: Colors.amber),
     labelMedium: TextStyle(color: Colors.pink),
   ),
+  buttonTheme: const ButtonThemeData(
+    colorScheme: ColorScheme.light(  // flutter 자체 버튼이 아닌 경우 컬러스킴으로 사용 많이 함.
+      primaryContainer: AppColors.red),
+      hoverColor: AppColors.brown
+  ),
   scaffoldBackgroundColor: const Color(0xffEAE8F4),
 );
 
@@ -34,22 +44,10 @@ ThemeData darkMode = ThemeData(
   colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
   useMaterial3: true,
   appBarTheme: const AppBarTheme(color: Colors.amber),
-  // textTheme: const TextTheme(),
-  // buttonTheme: ButtonTheme(buttonColor: Colors.white70, child: null,),
-  // bottomNavigationBarTheme: ,
+  buttonTheme: const ButtonThemeData(
+    colorScheme: ColorScheme.light(  // flutter 자체 버튼이 아닌 경우 컬러스킴으로 사용 많이 함.
+      primaryContainer: AppColors.black),
+      hoverColor: AppColors.blue
+  ),
   scaffoldBackgroundColor: AppColors.lightPink,
 );
-
-class _chkLogin extends State<Login> {
-  @override
-  Widget build(BuildContext context) {
-        
-  }
-}
-
-class Login {
-  final bool? isLogin;
-  Login({
-    this.isLogin
-    });
-}
