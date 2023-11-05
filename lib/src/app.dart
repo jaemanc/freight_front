@@ -6,12 +6,6 @@ class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'flutter demo',
@@ -30,14 +24,14 @@ ThemeData lightMode = ThemeData(
   textTheme: const TextTheme(
     titleLarge: TextStyle(color: Colors.brown),
     titleSmall: TextStyle(color: Colors.amber),
-    labelMedium: TextStyle(color: Colors.pink),
+    labelMedium: TextStyle(color: Color.fromARGB(255, 197, 113, 141)),
   ),
   buttonTheme: const ButtonThemeData(
     colorScheme: ColorScheme.light(  // flutter 자체 버튼이 아닌 경우 컬러스킴으로 사용 많이 함.
       primaryContainer: AppColors.red),
       hoverColor: AppColors.brown
   ),
-  scaffoldBackgroundColor: const Color(0xffEAE8F4),
+  scaffoldBackgroundColor: Color.fromARGB(255, 206, 139, 100),
 );
 
 ThemeData darkMode = ThemeData(

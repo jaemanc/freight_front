@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:intl/intl.dart';
 
-class Login {
+class LoginDto {
   final String contact;
   final DateTime createdAt;
   final String email;
@@ -11,10 +11,10 @@ class Login {
   final String userId;
   final bool isLogin;
 
-  Login(this.contact, this.createdAt, this.email, this.extra, this.name,
+  LoginDto(this.contact, this.createdAt, this.email, this.extra, this.name,
       this.userId, this.isLogin);
 
-  Login.fromJson(Map<String, dynamic> json)
+  LoginDto.fromJson(Map<String, dynamic> json)
       : contact = json['contact'] as String? ?? '',
         createdAt = DateTime.parse(json['createdAt']),
         email = json['email'] as String? ?? '',

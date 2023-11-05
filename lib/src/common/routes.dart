@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:theme_freight_ui/src/common/home.dart';
-import 'package:theme_freight_ui/src/login/screen/login.dart';
+import 'package:theme_freight_ui/src/common/logger.dart';
+import 'package:theme_freight_ui/src/login/screen/loginScreen.dart';
 
 enum Routes {
   home,
@@ -47,12 +48,10 @@ class AppNavigator {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   static Route onGenerateRoute(RouteSettings settings) {
+    logger.d("generate Route settings name ${settings.name}");
 
-    print("generate Route settings name ${settings.name}");
-    
     switch (settings.name) {
-      
-      case _Paths.login: 
+      case _Paths.login:
         return FadeRoute(page: const Login());
       // case _Paths.drive:
       //   return FadeRoute(page: const DriveScreen());
@@ -87,12 +86,12 @@ class AppNavigator {
 class FadeRoute extends PageRouteBuilder {
   FadeRoute({required this.page})
       : super(
-    pageBuilder: (_, __, ___) => page,
-    transitionsBuilder: (_, animation, __, child) => FadeTransition(
-      opacity: animation,
-      child: child,
-    ),
-  );
+          pageBuilder: (_, __, ___) => page,
+          transitionsBuilder: (_, animation, __, child) => FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
 
   final Widget page;
 }
