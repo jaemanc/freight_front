@@ -14,8 +14,6 @@ class App extends StatelessWidget {
       home: const Home(),
     );
   }
-  
-
 }
 
 ThemeData lightMode = ThemeData(

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:theme_freight_ui/src/common/home.dart';
 import 'package:theme_freight_ui/src/common/logger.dart';
-import 'package:theme_freight_ui/src/login/screen/loginScreen.dart';
+import 'package:theme_freight_ui/src/user/screen/loginScreen.dart';
 
 enum Routes {
   home,

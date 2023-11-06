@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:theme_freight_ui/src/common/images.dart';
 import 'package:theme_freight_ui/src/common/logger.dart';
 import 'package:theme_freight_ui/src/theme/colors.dart';
+import 'package:theme_freight_ui/src/user/screen/signupScreen.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -84,7 +85,9 @@ class _loginState extends State<Login> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return ElevatedButton(
-      onPressed: () => {print('signUp!')},
+      onPressed: () => {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUp()))
+      },
       child: Text('Sign Up', style: TextStyle(fontSize: 16)),
       style: ElevatedButton.styleFrom(),
     );

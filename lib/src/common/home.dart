@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:theme_freight_ui/src/common/images.dart';
 import 'package:theme_freight_ui/src/common/routes.dart';
-import 'package:theme_freight_ui/src/login/model/Login.dart';
-import 'package:theme_freight_ui/src/login/screen/loginScreen.dart';
+import 'package:theme_freight_ui/src/user/model/Login.dart';
+import 'package:theme_freight_ui/src/user/screen/loginScreen.dart';
 
 import 'logger.dart';
 
