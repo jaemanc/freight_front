@@ -1,20 +1,28 @@
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
-
-class LoginDto {
+class LoginEntity {
+  final String userId;
   final String contact;
   final DateTime createdAt;
   final String email;
-  final String extra;
   final String name;
-  final String userId;
+  final String extra;
   final bool isLogin;
 
-  LoginDto(this.contact, this.createdAt, this.email, this.extra, this.name,
-      this.userId, this.isLogin);
+  const LoginEntity(
+    {
+      required this.userId,
+      required this.contact,
+      required this.createdAt,
+      required this.email, 
+      required this.name, 
+      required this.extra,
+      required this.isLogin
+    }
+  );
 
-  LoginDto.fromJson(Map<String, dynamic> json)
+  LoginEntity.fromJson(Map<String, dynamic> json)
       : contact = json['contact'] as String? ?? '',
         createdAt = DateTime.parse(json['createdAt']),
         email = json['email'] as String? ?? '',
@@ -33,7 +41,7 @@ class LoginDto {
       'name': name,
       'isLogin': isLogin,
     };
-
     return jsonEncode(data);
   }
+
 }
