@@ -2,25 +2,28 @@ import 'dart:convert';
 
 import 'package:intl/intl.dart';
 class UserEntity {
-  final String userId;
-  final String contact;
-  final DateTime createdAt;
-  final String email;
-  final String name;
-  final String extra;
-  final bool isLogin;
+  final String? userId;
+  final String? contact;
+  final DateTime? createdAt;
+  final String? email;
+  final String? name;
+  final String? extra;
+  final bool? isLogin;
+    
+  const UserEntity({
+    this.userId,
+    this.contact,
+    this.createdAt,
+    this.email, 
+    this.name,
+    this.extra,
+    this.isLogin
+});
 
-  const UserEntity(
-    {
-      required this.userId,
-      required this.contact,
-      required this.createdAt,
-      required this.email, 
-      required this.name, 
-      required this.extra,
-      required this.isLogin
-    }
-  );
+  @override
+  String toString() {
+    return 'UserEntity{userId: $userId, contact: $contact, createdAt: $createdAt, email: $email, name: $name, extra: $extra, isLogin: $isLogin}';
+  }
 
   UserEntity.fromJson(Map<String, dynamic> json)
       : contact = json['contact'] as String? ?? '',
@@ -31,11 +34,13 @@ class UserEntity {
         userId = json['userId'] as String? ?? '',
         isLogin = json['isLogin'] as bool? ?? false;
 
+
+
   String toJson({bool encode = true}) {
     final Map<String, dynamic> data = {
       'contact': contact,
       'userId': userId,
-      'createdAt': DateFormat("yyyy-MM-dd").format(createdAt ?? DateTime.now()),
+      // 'createdAt': DateFormat("yyyy-MM-dd").format(createdAt ?? DateTime.now()),
       'email': email,
       'extra': extra,
       'name': name,

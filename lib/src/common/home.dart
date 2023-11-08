@@ -32,14 +32,10 @@ class _Home extends State<Home> {
     userInfo = await storage.read(key: 'login');
     // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어가게 합니다.
     if (userInfo != null) {
-      logger.d('push to main');
-
       Future(() {
         AppNavigator.push(Routes.main);
       });
-      
     } else {
-      logger.d('push to login');
       Future(() {
          Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const Login()));

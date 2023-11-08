@@ -41,7 +41,7 @@ class APIClient {
       return res;
   }
 
-  Future<http.Response> post(String endpoint, LoginEntity loginEntity, {Object? body}) async {
+  Future<http.Response> post(String endpoint, {Object? body}) async {
     http.Response res = 
     await http.post(
       getUri(

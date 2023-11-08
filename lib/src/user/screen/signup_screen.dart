@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:theme_freight_ui/src/common/images.dart';
 import 'package:theme_freight_ui/src/common/logger.dart';
+import 'package:theme_freight_ui/src/user/bloc/authentication_bloc.dart';
+import 'package:theme_freight_ui/src/user/event/authentication_event.dart';
+import 'package:theme_freight_ui/src/user/model/user_entity.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -12,12 +16,22 @@ class SignUp extends StatefulWidget {
 class _signUpState extends State<SignUp> {
   // id / contact / e-mail / name // ok! geust! 
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SignUpForm(),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  
+
 }
 
 class SignUpForm extends StatefulWidget {
@@ -26,6 +40,8 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+
+  AuthenticationBloc get authenticationbloc  => context.read<AuthenticationBloc>();
 
   final _formKey = GlobalKey<FormState>();
   String? _id;
@@ -110,15 +126,22 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
                 ),
                 SizedBox(height: 16),
+                /*
+                BlocBuilder<AuthenticationBloc, AuthenticationStateStatus>(
+                  bloc: _authenticationBloc,
+                  builder: (context, AuthenticationStateStatus state) {
+                    return Text('test');
+                  },
+                ),*/
                 ElevatedButton(
                   onPressed: () => {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save(),
-                      logger.d('id : ${_id} / contact : ${_contact} / email : ${_email} / name : ${_name}' )
-                      // SignUp API
+                      // call SignUp API
+                      authenticationbloc.add(Registration(UserEntity(userId: _id, contact: _contact, email: _email, name: _name, isLogin: false)))
                     }
                   },
-                  child: Text('Sign Up!')
+                  child: Text('Sign Up!'),
                 ),
                 SizedBox(height: 16),
                 ElevatedButton(onPressed: () => {

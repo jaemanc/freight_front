@@ -1,39 +1,66 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:theme_freight_ui/src/user/model/user_entity.dart';
 
-abstract class AuthenticationState extends Equatable {
-  final UserEntity? userEntity;
+enum AuthenticationStateStatus {
+  initial,
+  loading,
+  loadSuccess,
+  loadFailure
+}
+
+class AuthenticationState extends Equatable {
+  final AuthenticationStateStatus status;
+  final UserEntity userEntity;
   final Exception? error;
 
-  const AuthenticationState({this.userEntity, this.error});
+  const AuthenticationState({
+    this.status = AuthenticationStateStatus.initial, 
+    this.userEntity = const UserEntity(), 
+    this.error,
+  });
 
-}
-
-class InitAuthenticationState extends AuthenticationState {
-  const InitAuthenticationState() : super(userEntity: null, error: null);
-
-  @override
-  List<Object?> get props => [userEntity, error];
-}
-
-class LoadingAuthenticationState extends AuthenticationState {
-  const LoadingAuthenticationState({super.userEntity});
 
   @override
-  List<Object?> get props => [userEntity];
-}
+  List<Object?> get props => [];
 
-class LoadedAuthenticationState extends AuthenticationState {
-  const LoadedAuthenticationState({super.userEntity});
+  AuthenticationState initial() {
+    return copyWith(
+      status: AuthenticationStateStatus.initial
+    );
+  }
 
-  @override
-  List<Object?> get props => [userEntity];
-}
+  AuthenticationState asLoading() {
+    return copyWith(
+      status: AuthenticationStateStatus.loading
+    );
+  }
 
-class ErrorAuthenticationstate extends AuthenticationState {
-  final String errorMsg;
-  const ErrorAuthenticationstate(this.errorMsg);
+  AuthenticationState asLoadSuccess(UserEntity entity) {
+    return copyWith(
+      status: AuthenticationStateStatus.loadSuccess,
+      userEntity: entity
+    );
+  }
 
-  @override
-  List<Object?> get props => [error];
+  AuthenticationState asLoadFailure(Exception e) {
+    return copyWith(
+      status: AuthenticationStateStatus.loadFailure,
+      error: e
+    );
+  }
+
+  AuthenticationState copyWith({
+    AuthenticationStateStatus? status,
+    UserEntity? userEntity,
+    Exception? error,
+  }) {
+    return AuthenticationState(
+      status: status ?? this.status,
+      userEntity: userEntity ?? this.userEntity,
+      error: error ?? this.error
+    );
+  }
+
 }

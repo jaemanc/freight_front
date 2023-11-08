@@ -1,44 +1,59 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:theme_freight_ui/src/common/client.dart';
 import 'package:theme_freight_ui/src/common/logger.dart';
 import 'package:theme_freight_ui/src/user/model/user_entity.dart';
-import 'package:theme_freight_ui/src/user/screen/login_screen.dart';
 
 abstract class AuthenticationRepository {
-  Future<LoginEntity> login(LoginEntity loginEntity);
-  Future<LoginEntity> nonMemberRegistration();
-  Future<LoginEntity> registration(LoginEntity loginEntity);
+  Future<UserEntity> login(UserEntity userEntity);
+  Future<UserEntity> nonMemberRegistration();
+  Future<UserEntity> registration(UserEntity userEntity);
 }
 
 class AuthenticationRepositoryImpl extends AuthenticationRepository {
-  final _client = APIClient();
+  final _client = APIClient(); 
   AuthenticationRepositoryImpl();
 
   @override
-  Future<LoginEntity> registration(LoginEntity loginEntity) async {
-    final response =
-        await _client.post('/api/v1/user/registration', loginEntity);
+  Future<UserEntity> registration(UserEntity userEntity) async {
+
+    final response = await _client.post('/api/v1/user/registration', body: userEntity.toJson());
     final status = response.statusCode;
-    final resultData = jsonDecode(utf8.decode(response.bodyBytes));
 
-    logger.d('[POST] /api/v1/user/registration');
-    logger.d('[REQ BODY] $loginEntity');
-    logger.d('[STATUS] $status');
-    logger.d('[RESPONSE] $resultData');
-    logger.d('TEST :::  $LoginEntity.fromJson(resultData');
+    if (status != HttpStatus.created){
+      logger.d('''
+        [REQ BODY] : ${userEntity.toString()} 
+        [STATUS]   : $status
+      ''');
 
-    return LoginEntity.fromJson(resultData);
+      userEntity.isLogin == false;
+      return userEntity;
+    } 
+    
+    final Map<String, dynamic> resultData = jsonDecode(utf8.decode(response.bodyBytes));
+
+    logger.d('''
+      [POST]     : /api/v1/user/registration
+      [REQ BODY] : ${userEntity.toJson()}
+      [STATUS]   : $status
+      [RESPONSE] : $resultData
+      [RES_HEAD] : ${response.headers}
+      [RESULT]   : ${UserEntity.fromJson(resultData)}
+      ''');
+    userEntity.isLogin == true;
+    userEntity = UserEntity.fromJson(resultData);
+    return userEntity;
   }
 
   @override
-  Future<LoginEntity> login(LoginEntity loginEntity) {
+  Future<UserEntity> login(UserEntity userEntity) {
     // TODO: implement login
     throw UnimplementedError();
   }
 
   @override
-  Future<LoginEntity> nonMemberRegistration() {
+  Future<UserEntity> nonMemberRegistration() {
     // TODO: implement nonMemberRegistration
     throw UnimplementedError();
   }

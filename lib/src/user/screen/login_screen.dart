@@ -19,7 +19,6 @@ class _loginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    logger.d('login page');
     return Scaffold(
         body: SingleChildScrollView(
             key: _scrollkey,
