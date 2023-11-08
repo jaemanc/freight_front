@@ -1,8 +1,9 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:theme_freight_ui/src/user/model/user_entity.dart';
 
-class Client {
+class APIClient {
 
   final host = dotenv.get('API_HOST');
 
@@ -40,7 +41,7 @@ class Client {
       return res;
   }
 
-  Future<http.Response> post(String endpoint, {Object? body}) async {
+  Future<http.Response> post(String endpoint, LoginEntity loginEntity, {Object? body}) async {
     http.Response res = 
     await http.post(
       getUri(

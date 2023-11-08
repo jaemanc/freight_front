@@ -4,7 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:theme_freight_ui/src/common/images.dart';
 import 'package:theme_freight_ui/src/common/logger.dart';
 import 'package:theme_freight_ui/src/theme/colors.dart';
-import 'package:theme_freight_ui/src/user/screen/signupScreen.dart';
+import 'package:theme_freight_ui/src/user/screen/signup_screen.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

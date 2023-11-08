@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
-class LoginEntity {
+class UserEntity {
   final String userId;
   final String contact;
   final DateTime createdAt;
@@ -10,7 +10,7 @@ class LoginEntity {
   final String extra;
   final bool isLogin;
 
-  const LoginEntity(
+  const UserEntity(
     {
       required this.userId,
       required this.contact,
@@ -22,7 +22,7 @@ class LoginEntity {
     }
   );
 
-  LoginEntity.fromJson(Map<String, dynamic> json)
+  UserEntity.fromJson(Map<String, dynamic> json)
       : contact = json['contact'] as String? ?? '',
         createdAt = DateTime.parse(json['createdAt']),
         email = json['email'] as String? ?? '',
