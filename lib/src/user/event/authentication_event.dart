@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:theme_freight_ui/src/user/model/user_entity.dart';
+import 'package:theme_freight_ui/src/common/logger.dart';
 
 abstract class AuthenticationEvent extends Equatable{
   const AuthenticationEvent();

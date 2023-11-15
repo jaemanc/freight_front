@@ -12,16 +12,16 @@ abstract class AuthenticationRepository {
 }
 
 class AuthenticationRepositoryImpl extends AuthenticationRepository {
-  final _client = APIClient(); 
+  final _client = APIClient();
   AuthenticationRepositoryImpl();
 
   @override
   Future<UserEntity> registration(UserEntity userEntity) async {
-
-    final response = await _client.post('/api/v1/user/registration', body: userEntity.toJson());
+    final response = await _client.post('/api/v1/user/registration',
+        body: userEntity.toJson());
     final status = response.statusCode;
 
-    if (status != HttpStatus.created){
+    if (status != HttpStatus.created) {
       logger.d('''
         [REQ BODY] : ${userEntity.toString()} 
         [STATUS]   : $status
@@ -29,9 +29,12 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
 
       userEntity.isLogin == false;
       return userEntity;
-    } 
-    
-    final Map<String, dynamic> resultData = jsonDecode(utf8.decode(response.bodyBytes));
+    }
+
+    Map<String, dynamic> resultData = jsonDecode(utf8.decode(response.bodyBytes));
+    resultData["isLogin"] = true;
+
+    userEntity = UserEntity.fromJson(resultData);
 
     logger.d('''
       [POST]     : /api/v1/user/registration
@@ -39,10 +42,9 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
       [STATUS]   : $status
       [RESPONSE] : $resultData
       [RES_HEAD] : ${response.headers}
-      [RESULT]   : ${UserEntity.fromJson(resultData)}
+      [RESULT]   : ${userEntity.toJson()}
       ''');
-    userEntity.isLogin == true;
-    userEntity = UserEntity.fromJson(resultData);
+
     return userEntity;
   }
 

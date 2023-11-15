@@ -35,7 +35,6 @@ class UserEntity {
         isLogin = json['isLogin'] as bool? ?? false;
 
 
-
   String toJson({bool encode = true}) {
     final Map<String, dynamic> data = {
       'contact': contact,

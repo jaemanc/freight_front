@@ -8,11 +8,12 @@ import 'package:theme_freight_ui/src/user/model/user_entity.dart';
 import 'package:theme_freight_ui/src/user/repository/authentication_repository.dart';
 import 'package:theme_freight_ui/src/user/state/authentication_state.dart';
 
-class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc
+    extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthenticationRepository _authenticationRepository;
 
-  AuthenticationBloc(this._authenticationRepository) : super(InitAuthenticationBloc())
-      {
+  AuthenticationBloc(this._authenticationRepository)
+      : super(InitAuthenticationBloc()) {
     on<Login>(_login);
     on<Registration>(_registration);
   }
@@ -21,25 +22,26 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     logger.d(state.userEntity);
   }
 
-  void _login (Login event, Emitter<AuthenticationState> emit) async {
+  void _login(Login event, Emitter<AuthenticationState> emit) async {
     //_authenticationRepository.registration(state.userEntity);
   }
 
-  void _nonMemberRegistration() {
+  void _nonMemberRegistration() {}
 
-  }
-
-  void _registration(Registration event, Emitter<AuthenticationState> emit) async {
-    try{
+  void _registration(
+      Registration event, Emitter<AuthenticationState> emit) async {
+    try {
       emit(state.asLoading());
-      final data = await _authenticationRepository.registration(event.userEntity);
+      var data = await _authenticationRepository.registration(event.userEntity);
 
       if (data.isLogin == true) {
         emit(state.asLoadSuccess(data));
+
+        logger.d(' 그래서 값이 결국 이렇게 됐습니다!!! :  ${state.userEntity}');
       } else {
-        emit(state.asLoadFailure(Exception('REGISTRATION FAIL')));  
+        emit(state.asLoadFailure(Exception('REGISTRATION FAIL')));
       }
-    } on Exception catch (e,stackTrace) {
+    } on Exception catch (e, stackTrace) {
       logger.e('$e $stackTrace');
       emit(state.asLoadFailure(e));
     }
@@ -48,5 +50,4 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
 class InitAuthenticationBloc extends AuthenticationState {
   //InitAuthenticationBloc(super.status, super.userEntity, super.error);
-
 }
