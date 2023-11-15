@@ -25,26 +25,29 @@ class AuthenticationState extends Equatable {
   }
 
   AuthenticationState asLoading() {
-    return copyWith(AuthenticationStateStatus.loading);
+    return copyWith(status: AuthenticationStateStatus.loading);
   }
 
   AuthenticationState asLoadSuccess(UserEntity entity) {
-    copyWith(status: AuthenticationStateStatus.loadSuccess, userEntity: entity);
+    status = AuthenticationStateStatus.loadSuccess;
+    userEntity = entity;
 
-    logger.f('스테이트 바뀌었나? $userEntity , 아니 여긴 값이 있는디 ..?  $entity');
-
-    return this;
+    return copyWith(
+        status: AuthenticationStateStatus.loadSuccess, userEntity: entity);
   }
 
   AuthenticationState asLoadFailure(Exception e) {
     return copyWith(status: AuthenticationStateStatus.loadFailure, error: e);
   }
 
-  AuthenticationState copyWith({AuthenticationStateStatus? status, UserEntity? userEntity, Exception? error}) {
-    this.status = status!;
-    this.userEntity = userEntity!;
-    error ?? (this.error = error);
-
-    return AuthenticationState();
+  AuthenticationState copyWith(
+      {AuthenticationStateStatus? status,
+      UserEntity? userEntity,
+      Exception? error}) {
+    // 새로운 AuthenticationState를 리턴하게 된다...
+    return AuthenticationState(
+        status: status ?? this.status,
+        userEntity: userEntity ?? this.userEntity,
+        error: error ?? this.error);
   }
 }

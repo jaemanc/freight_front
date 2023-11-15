@@ -37,7 +37,7 @@ class AuthenticationBloc
       if (data.isLogin == true) {
         emit(state.asLoadSuccess(data));
 
-        logger.d(' 그래서 값이 결국 이렇게 됐습니다!!! :  ${state.userEntity}');
+        logger.d(' STATUS 변경값 체크  :  ${state.userEntity} / status : ${state.status}');
       } else {
         emit(state.asLoadFailure(Exception('REGISTRATION FAIL')));
       }
