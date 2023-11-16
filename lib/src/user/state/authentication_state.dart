@@ -7,11 +7,11 @@ import 'package:theme_freight_ui/src/user/model/user_entity.dart';
 enum AuthenticationStateStatus { initial, loading, loadSuccess, loadFailure }
 
 class AuthenticationState extends Equatable {
-  AuthenticationStateStatus status;
-  UserEntity userEntity;
-  Exception? error;
+  final AuthenticationStateStatus status;
+  final UserEntity userEntity; 
+  final Exception? error;
 
-  AuthenticationState({
+  const AuthenticationState({
     this.status = AuthenticationStateStatus.initial,
     this.userEntity = const UserEntity(),
     this.error,
@@ -28,14 +28,6 @@ class AuthenticationState extends Equatable {
     return copyWith(status: AuthenticationStateStatus.loading);
   }
 
-  AuthenticationState asLoadSuccess(UserEntity entity) {
-    status = AuthenticationStateStatus.loadSuccess;
-    userEntity = entity;
-
-    return copyWith(
-        status: AuthenticationStateStatus.loadSuccess, userEntity: entity);
-  }
-
   AuthenticationState asLoadFailure(Exception e) {
     return copyWith(status: AuthenticationStateStatus.loadFailure, error: e);
   }
@@ -50,4 +42,9 @@ class AuthenticationState extends Equatable {
         userEntity: userEntity ?? this.userEntity,
         error: error ?? this.error);
   }
+
+}
+
+class AuthenticationStateSetter extends  AuthenticationState {
+  const AuthenticationStateSetter() : super(status: AuthenticationStateStatus.loadSuccess);
 }

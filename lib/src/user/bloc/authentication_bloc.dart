@@ -16,7 +16,17 @@ class AuthenticationBloc
       : super(InitAuthenticationBloc()) {
     on<Login>(_login);
     on<Registration>(_registration);
+    on<Refresh>(_refresh); 
+    on<GuestLoginEvent>(_guestLoginEvent);
   }
+
+  void _refresh(Refresh event, Emitter<AuthenticationState> emit) {
+    emit(state);
+  }
+
+  void _guestLoginEvent(GuestLoginEvent event, Emitter<AuthenticationState> emit) {
+  }
+
 
   void _defaultLoadAuthenticationEvent() {
     logger.d(state.userEntity);
@@ -28,16 +38,18 @@ class AuthenticationBloc
 
   void _nonMemberRegistration() {}
 
-  void _registration(
-      Registration event, Emitter<AuthenticationState> emit) async {
+  void _registration(Registration event, Emitter<AuthenticationState> emit) async {
     try {
       emit(state.asLoading());
       var data = await _authenticationRepository.registration(event.userEntity);
 
       if (data.isLogin == true) {
-        emit(state.asLoadSuccess(data));
+        // emit(state.asLoadSuccess());
 
-        logger.d(' STATUS 변경값 체크  :  ${state.userEntity} / status : ${state.status}');
+        //이 코드는 상태 감지하는 것 까지 확인 했습니다.
+        emit(AuthenticationStateSetter());
+        logger.i(' 해치웠나..? ');
+ 
       } else {
         emit(state.asLoadFailure(Exception('REGISTRATION FAIL')));
       }
@@ -49,5 +61,5 @@ class AuthenticationBloc
 }
 
 class InitAuthenticationBloc extends AuthenticationState {
-  //InitAuthenticationBloc(super.status, super.userEntity, super.error);
+  InitAuthenticationBloc();
 }
