@@ -37,7 +37,6 @@ class Refresh extends AuthenticationEvent {
 }
 
 class GuestLoginEvent extends AuthenticationEvent {
-
   GuestLoginEvent();
   
   @override

@@ -53,6 +53,7 @@ class AppNavigator {
     switch (settings.name) {
       case _Paths.login:
         return FadeRoute(page: const Login());
+
       // case _Paths.drive:
       //   return FadeRoute(page: const DriveScreen());
       // case _Paths.expenditure:

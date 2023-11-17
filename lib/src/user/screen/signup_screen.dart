@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:theme_freight_ui/src/common/home.dart';
 import 'package:theme_freight_ui/src/common/images.dart';
 import 'package:theme_freight_ui/src/common/logger.dart';
 import 'package:theme_freight_ui/src/user/bloc/authentication_bloc.dart';
@@ -53,115 +56,119 @@ class _SignUpFormState extends State<SignUpForm> {
 
     return BlocSelector<AuthenticationBloc, AuthenticationState, AuthenticationStateStatus>(
         selector: (state) {
-          logger.i(' ${state}  state 셀렉트하나요?? ');
           return state.status;
-        }, builder: ((context, state) {
-        logger.i(' ${state}  빌더는 동작하나요?? ');
-        return state != AuthenticationStateStatus.loadSuccess
-          ? Column(children: <Widget>[
-            Row(children: [_exitBtn()]),
-            Align(
-                alignment: Alignment.center,
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[ 
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: screenHeight * 0.1,
-                              bottom: screenHeight * 0.1),
-                          child: const Image(image: AppImages.mainTruck),
-                        ),
-                        SizedBox(
-                          width: screenWidth * 0.5,
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                decoration: InputDecoration(labelText: 'ID'),
-                                validator: (value) {
-                                  if (value == null || value == '') {
-                                    return 'ID를 입력해주세요.';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _id = value;
-                                },
-                              ),
-                              TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: 'Contact'),
-                                validator: (value) {
-                                  if (value == null || value == '') {
-                                    return 'Contact를 입력해주세요.';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _contact = value;
-                                },
-                              ),
-                              TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: 'E-mail'),
-                                validator: (value) {
-                                  if (value == null || value == '') {
-                                    return 'E-mail을 입력해주세요.';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _email = value;
-                                },
-                              ),
-                              TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: 'Name'),
-                                validator: (value) {
-                                  if (value == null || value == '') {
-                                    return '이름을 입력해주세요.';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _name = value;
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 16),
+        }, builder: ((context, state) { 
+          if (state == AuthenticationStateStatus.loadSuccess) {
+            // 다음 프레임에서 페이지 이동 
+            Future.microtask((){
+              logger.i('Home 화면으로 이동합니다. ');
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const Home()));
+            });
+            return Text('메인화면으로 이동합니다!');
 
-                        ElevatedButton(
-                          onPressed: () => {
-                            if (_formKey.currentState!.validate())
-                              {
-                                _formKey.currentState!.save(),
-                                // call SignUp API
-                                authenticationbloc.add(Registration(
-                                    UserEntity(
-                                        userId: _id,
-                                        contact: _contact,
-                                        email: _email,
-                                        name: _name,
-                                        isLogin: false))),
-                              }
-                          },
-                          child: Text('Sign Up!'),
-                        ),
-                        SizedBox(height: 16),
-                        ElevatedButton(
+          } else {
+            return 
+              Column(children: <Widget>[
+              Row(children: [_exitBtn()]),
+              Align(
+                  alignment: Alignment.center,
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[ 
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: screenHeight * 0.1,
+                                bottom: screenHeight * 0.1),
+                            child: const Image(image: AppImages.mainTruck),
+                          ),
+                          SizedBox(
+                            width: screenWidth * 0.5,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  decoration: InputDecoration(labelText: 'ID'),
+                                  validator: (value) {
+                                    if (value == null || value == '') {
+                                      return 'ID를 입력해주세요.';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _id = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: 'Contact'),
+                                  validator: (value) {
+                                    if (value == null || value == '') {
+                                      return 'Contact를 입력해주세요.';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _contact = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: 'E-mail'),
+                                  validator: (value) {
+                                    if (value == null || value == '') {
+                                      return 'E-mail을 입력해주세요.';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _email = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: 'Name'),
+                                  validator: (value) {
+                                    if (value == null || value == '') {
+                                      return '이름을 입력해주세요.';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _name = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 16),
+
+                          ElevatedButton(
                             onPressed: () => {
-                                  authenticationbloc.add(GuestLoginEvent()),
-                                  setState(() {
-                                    AuthenticationStateStatus.loadSuccess;
-                                  })
-                                },
-                            child: Text('Guest'))
-                      ],
-                    ))),
-          ]) : Text(' 아 제발 로그인헀다고 시발롬아 ');
-              
+                              if (_formKey.currentState!.validate())
+                                {
+                                  _formKey.currentState!.save(),
+                                  // call SignUp API
+                                  authenticationbloc.add(Registration(
+                                      UserEntity(
+                                          userId: _id,
+                                          contact: _contact,
+                                          email: _email,
+                                          name: _name,
+                                          isLogin: false))),
+                                }
+                            },
+                            child: Text('Sign Up!'),
+                          ),
+                          SizedBox(height: 16),
+                          ElevatedButton(
+                              onPressed: () => {
+                                    authenticationbloc.add(GuestLoginEvent()),
+                                  },
+                              child: Text('Guest'))
+                        ],
+                      ))),
+            ]);
+          };
         }));
   }
 

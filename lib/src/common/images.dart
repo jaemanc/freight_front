@@ -25,10 +25,10 @@ class _AppBarIcon extends AssetImage {
 
 class AppImages {
   static const mainTruck = _MainIcon('main_truck.png');
-  static const menuDocument = _MenuIcon('menu_documents.png');
+  static const menuDocument = _MenuIcon('menu_document.png');
   static const menuRefuel = _MenuIcon('menu_refuel.png');
   static const menuSpend = _MenuIcon('menu_spend.png');
-  static const menuFix = _MenuIcon('menu_fix.png');
+  static const menuFix = _MenuIcon('menu_maintenance.png');
   static const exit2 = _AppBarIcon('appbar_exit2.png');
   static const setting = _AppBarIcon('appbar_setting.png');
 

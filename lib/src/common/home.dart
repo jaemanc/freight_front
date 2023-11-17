@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:theme_freight_ui/src/common/images.dart';
 import 'package:theme_freight_ui/src/common/routes.dart';
+import 'package:theme_freight_ui/src/common/util.dart';
 import 'package:theme_freight_ui/src/user/screen/login_screen.dart';
 
 import 'logger.dart';
@@ -14,8 +15,8 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends State<Home> {
-  static final storage = FlutterSecureStorage();
-  dynamic userInfo = '';
+  Util uilt = Util();
+  final GlobalKey<NestedScrollViewState> _scrollkey = GlobalKey();
 
   @override
   void initState() {
@@ -27,34 +28,195 @@ class _Home extends State<Home> {
   }
 
   _asyncMethod() async {
-    // read 함수로 key값에 맞는 정보를 불러오고 데이터타입은 String 타입
-    // 데이터가 없을때는 null을 반환
-    userInfo = await storage.read(key: 'login');
-    // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어가게 합니다.
-    if (userInfo != null) {
-      Future(() {
-        AppNavigator.push(Routes.main);
+    var token = uilt.tokenGetter();
+    String? value = await token;
+
+    if (value == null) {
+      Future.microtask((){
+        logger.i('사용자 정보를 알수 없으므로, 로그인 페이지로 이동합니다.');
+         Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
       });
     } else {
-      Future(() {
-         Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Login()));
-      });
-      // FadeRoute(page: const Login());
+      logger.i('사용자 정보를 확인했습니다. ${value}');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Screen'),
-      ),
-      body: const Center(
+      body: SingleChildScrollView(
+        key: _scrollkey,
         child: Column(
-          children: [Image(image: AppImages.mainTruck)]
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _exitBtn(),
+                _settingBtn(),
+              ],
+            ),
+            SizedBox(
+              width: screenWidth * 0.3,
+              height: screenHeight * 0.2,
+              child: const Image(image: AppImages.mainTruck, fit:BoxFit.fill),
+            ),
+            Text('운행 일지' , style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+            // 운행 지출 주유 정비
+            SizedBox(height: screenHeight * 0.13),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _operate(),
+                SizedBox(width: screenWidth* 0.06),   
+                _refueling(),
+              ]
+            ),
+            SizedBox(height: screenHeight* 0.06),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _spend(),
+                SizedBox(width: screenWidth * 0.06),  
+                _maintenance()
+              ],
+            ),
+            SizedBox(height: screenWidth * 0.15),  
+            _callendar()
+          ],
         ),
       ),
     );
   }
+  
+  Widget _operate() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Column(
+      children: [
+        Image
+        (
+          image: AppImages.menuDocument,
+          width: screenWidth * 0.2,
+          height: screenHeight * 0.1,
+          fit: BoxFit.fill,
+        ),
+        Text('운행 내역',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+        )
+      ],
+    );
+  }
+
+  Widget _refueling() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Column(
+      children: [
+        Image
+        (
+          image: AppImages.menuRefuel,
+          width: screenWidth * 0.2,
+          height: screenHeight * 0.1,
+          fit: BoxFit.fill,
+        ),
+        Text('주유 내역',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+        )
+      ],
+    );
+  }
+
+  Widget _spend() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return Column(
+      children: [
+        Image
+        (
+          image: AppImages.menuSpend,
+          width: screenWidth * 0.2,
+          height: screenHeight * 0.1,
+          fit: BoxFit.fill,
+        ),
+        Text('지출 내역',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+        )
+      ],
+    );
+  }
+
+  Widget _maintenance() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Column(
+      children: [
+        Image 
+        (
+          image: AppImages.menuFix,
+          width: screenWidth * 0.2,
+          height: screenHeight * 0.1,
+          fit: BoxFit.fill,
+        ),
+        Text('정비 내역',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+        )
+      ],
+    );
+  }
+
+  Widget _exitBtn() {
+      double screenHeight = MediaQuery.of(context).size.height;
+      double screenWidth = MediaQuery.of(context).size.width; 
+      return Padding(
+        padding:
+            EdgeInsets.only(left: screenWidth * 0.01, top: screenHeight * 0.02),
+        child: GestureDetector(
+          onTap: () {
+            // 클릭이벤트
+            logger.d(' exit click ');
+          },
+          child: const Image(image: AppImages.exit2),
+        ));
+    }
+
+  Widget _settingBtn() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Padding(
+      padding:
+          EdgeInsets.only(left: screenWidth * 0.01, top: screenHeight * 0.02),
+      child: GestureDetector(
+          onTap: () {
+            // 클릭이벤트
+            logger.d('setting click ');
+          },
+          child: Image(image: AppImages.setting)
+        ));
+  }
+
+  Widget _callendar() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Text(
+        '  2023  ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 40,
+          fontWeight: FontWeight.w600
+        ),
+      ),
+    );
+  }
+
 }

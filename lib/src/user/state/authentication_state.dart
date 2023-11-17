@@ -18,7 +18,7 @@ class AuthenticationState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [status, userEntity, error];
 
   AuthenticationState initial() {
     return copyWith(status: AuthenticationStateStatus.initial);
@@ -32,19 +32,17 @@ class AuthenticationState extends Equatable {
     return copyWith(status: AuthenticationStateStatus.loadFailure, error: e);
   }
 
-  AuthenticationState copyWith(
-      {AuthenticationStateStatus? status,
-      UserEntity? userEntity,
-      Exception? error}) {
-    // 새로운 AuthenticationState를 리턴하게 된다...
+  AuthenticationState asLoadSuccess() {
+    return copyWith(status: AuthenticationStateStatus.loadSuccess);
+  }
+
+  AuthenticationState copyWith( {AuthenticationStateStatus? status, UserEntity? userEntity, Exception? error
+  }) 
+  {
     return AuthenticationState(
         status: status ?? this.status,
         userEntity: userEntity ?? this.userEntity,
         error: error ?? this.error);
   }
 
-}
-
-class AuthenticationStateSetter extends  AuthenticationState {
-  const AuthenticationStateSetter() : super(status: AuthenticationStateStatus.loadSuccess);
 }
