@@ -3,6 +3,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:theme_freight_ui/src/common/images.dart';
 import 'package:theme_freight_ui/src/common/routes.dart';
 import 'package:theme_freight_ui/src/common/util.dart';
+import 'package:theme_freight_ui/src/maintenance/screen/maintenance_screen.dart';
+import 'package:theme_freight_ui/src/operate/screen/operate_screen.dart';
+import 'package:theme_freight_ui/src/refuel/screen/refuel_screen.dart';
+import 'package:theme_freight_ui/src/spend/screen/spend_screen.dart';
 import 'package:theme_freight_ui/src/user/screen/login_screen.dart';
 
 import 'logger.dart';
@@ -94,38 +98,54 @@ class _Home extends State<Home> {
   Widget _operate() {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Image
-        (
-          image: AppImages.menuDocument,
-          width: screenWidth * 0.2,
-          height: screenHeight * 0.1,
-          fit: BoxFit.fill,
-        ),
-        Text('운행 내역',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+    return InkWell (
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Operate())
+          );
+        },
+        child: Column(
+          children: [
+            Image
+            (
+              image: AppImages.menuDocument,
+              width: screenWidth * 0.2,
+              height: screenHeight * 0.1,
+              fit: BoxFit.fill,
+            ),
+            Text('운행 내역',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+            )
+          ],
         )
-      ],
     );
   }
 
   Widget _refueling() {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Image
-        (
-          image: AppImages.menuRefuel,
-          width: screenWidth * 0.2,
-          height: screenHeight * 0.1,
-          fit: BoxFit.fill,
-        ),
-        Text('주유 내역',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
-        )
-      ],
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Refuel())
+      );
+      },
+      child: Column(
+        children: [
+          Image
+          (
+            image: AppImages.menuRefuel,
+            width: screenWidth * 0.2,
+            height: screenHeight * 0.1,
+            fit: BoxFit.fill,
+          ),
+          Text('주유 내역',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+          )
+        ],
+      ),
     );
   }
 
@@ -133,38 +153,54 @@ class _Home extends State<Home> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return Column(
-      children: [
-        Image
-        (
-          image: AppImages.menuSpend,
-          width: screenWidth * 0.2,
-          height: screenHeight * 0.1,
-          fit: BoxFit.fill,
-        ),
-        Text('지출 내역',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
-        )
-      ],
+    return  InkWell(
+      onTap: () {
+        Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Spend())
+      );
+      },
+      child: Column(
+        children: [
+          Image
+          (
+            image: AppImages.menuSpend,
+            width: screenWidth * 0.2,
+            height: screenHeight * 0.1,
+            fit: BoxFit.fill,
+          ),
+          Text('지출 내역',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+          )
+        ],
+      ),
     );
   }
 
   Widget _maintenance() {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Image 
-        (
-          image: AppImages.menuFix,
-          width: screenWidth * 0.2,
-          height: screenHeight * 0.1,
-          fit: BoxFit.fill,
-        ),
-        Text('정비 내역',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
-        )
-      ],
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Maintenance())
+      );
+      },
+      child:Column(
+        children: [
+          Image 
+          (
+            image: AppImages.menuFix,
+            width: screenWidth * 0.2,
+            height: screenHeight * 0.1,
+            fit: BoxFit.fill,
+          ),
+          Text('정비 내역',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+          )
+        ],
+      ),
     );
   }
 
