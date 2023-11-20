@@ -31,5 +31,8 @@ class AppImages {
   static const menuFix = _MenuIcon('menu_maintenance.png');
   static const exit2 = _AppBarIcon('appbar_exit2.png');
   static const setting = _AppBarIcon('appbar_setting.png');
+  static const excel_48 = _AppBarIcon('appbar_exceL_48.png');
+  static const excel_96 = _AppBarIcon('appbar_exceL_96.png');
+  static const plus_btn = _AppBarIcon('appbar_plus_btn_48.png');
 
 }

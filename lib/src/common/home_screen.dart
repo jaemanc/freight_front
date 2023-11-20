@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:theme_freight_ui/src/common/exit_button.dart';
 import 'package:theme_freight_ui/src/common/images.dart';
 import 'package:theme_freight_ui/src/common/routes.dart';
+import 'package:theme_freight_ui/src/common/setting.dart';
 import 'package:theme_freight_ui/src/common/util.dart';
 import 'package:theme_freight_ui/src/maintenance/screen/maintenance_screen.dart';
 import 'package:theme_freight_ui/src/operate/screen/operate_screen.dart';
 import 'package:theme_freight_ui/src/refuel/screen/refuel_screen.dart';
 import 'package:theme_freight_ui/src/spend/screen/spend_screen.dart';
-import 'package:theme_freight_ui/src/user/screen/login_screen.dart';
+import 'package:theme_freight_ui/src/user/screen/authentication_screen.dart';
 
 import 'logger.dart';
 
@@ -58,8 +60,8 @@ class _Home extends State<Home> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _exitBtn(),
-                _settingBtn(),
+                ExitButton(),
+                const SettingButton(),
               ],
             ),
             SizedBox(
@@ -87,7 +89,7 @@ class _Home extends State<Home> {
                 _maintenance()
               ],
             ),
-            SizedBox(height: screenWidth * 0.15),  
+            SizedBox(height: screenWidth * 0.10),  
             _callendar()
           ],
         ),
@@ -204,47 +206,17 @@ class _Home extends State<Home> {
     );
   }
 
-  Widget _exitBtn() {
-      double screenHeight = MediaQuery.of(context).size.height;
-      double screenWidth = MediaQuery.of(context).size.width; 
-      return Padding(
-        padding:
-            EdgeInsets.only(left: screenWidth * 0.01, top: screenHeight * 0.02),
-        child: GestureDetector(
-          onTap: () {
-            // 클릭이벤트
-            logger.d(' exit click ');
-          },
-          child: const Image(image: AppImages.exit2),
-        ));
-    }
-
-  Widget _settingBtn() {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-    return Padding(
-      padding:
-          EdgeInsets.only(left: screenWidth * 0.01, top: screenHeight * 0.02),
-      child: GestureDetector(
-          onTap: () {
-            // 클릭이벤트
-            logger.d('setting click ');
-          },
-          child: Image(image: AppImages.setting)
-        ));
-  }
-
   Widget _callendar() {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(7.0),
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: Text(
+      child: const Text(
         '  2023  ',
         style: TextStyle(
           color: Colors.white,
@@ -254,5 +226,4 @@ class _Home extends State<Home> {
       ),
     );
   }
-
 }

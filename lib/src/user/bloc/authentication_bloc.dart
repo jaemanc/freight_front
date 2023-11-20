@@ -29,6 +29,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         
         if (data.isLogin == true) {
           emit(state.asLoadSuccess());
+          logger.i('GUEST LOGIN!!');
         } else {
           emit(state.asLoadFailure(Exception(('GUEST LOGIN FAIL'))));
         }
