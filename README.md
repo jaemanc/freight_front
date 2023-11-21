@@ -41,4 +41,6 @@ __Contact__ : jaemanc93@gmail.com
 
 ## Mockup
 
+![image](https://github.com/jaemanc/freight_front/assets/104718153/80b862db-ca3d-4b9e-bb87-ba69735f6168)
+
 
