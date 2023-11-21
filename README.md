@@ -1,16 +1,46 @@
 # theme_freight_ui
 
-A new Flutter project.
+__Blog__ : https://girinprogram93.tistory.com/108 
+<br>
+__Contact__ : jaemanc93@gmail.com
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+### freight app
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# ***Todo***
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### 운행 
+1. 목록 조회 
+2. 등록 
+3. 수정
+4. 삭제
+
+#### 지출 
+1. 목록 조회 
+2. 등록 
+3. 수정
+4. 삭제
+
+#### 주유 
+1. 목록 조회 
+2. 등록 
+3. 수정
+4. 삭제
+
+#### 정비  
+1. 목록 조회 
+2. 등록 
+3. 수정
+4. 삭제
+
+#### Setting
+1. ~~세팅페이지~~
+2. 다크 모드 세팅 
+3. 계정 내보내기 / 가져오기 기능 
+
+## Mockup
+
+![image](https://github.com/jaemanc/freight_front/assets/104718153/80b862db-ca3d-4b9e-bb87-ba69735f6168)
+
+

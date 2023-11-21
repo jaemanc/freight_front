@@ -1,12 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:theme_freight_ui/src/common/home.dart';
+import 'package:theme_freight_ui/src/common/exit_button.dart';
+import 'package:theme_freight_ui/src/common/home_screen.dart';
 import 'package:theme_freight_ui/src/common/images.dart';
 import 'package:theme_freight_ui/src/common/logger.dart';
+import 'package:theme_freight_ui/src/theme/colors.dart';
 import 'package:theme_freight_ui/src/user/bloc/authentication_bloc.dart';
-import 'package:theme_freight_ui/src/user/bloc/authentication_selector.dart';
 import 'package:theme_freight_ui/src/user/event/authentication_event.dart';
 import 'package:theme_freight_ui/src/user/model/user_entity.dart';
 import 'package:theme_freight_ui/src/user/state/authentication_state.dart';
@@ -69,7 +68,7 @@ class _SignUpFormState extends State<SignUpForm> {
           } else {
             return 
               Column(children: <Widget>[
-              Row(children: [_exitBtn()]),
+              Row(children: [ExitButton()]),
               Align(
                   alignment: Alignment.center,
                   child: Form(
@@ -86,61 +85,14 @@ class _SignUpFormState extends State<SignUpForm> {
                             width: screenWidth * 0.5,
                             child: Column(
                               children: [
-                                TextFormField(
-                                  decoration: InputDecoration(labelText: 'ID'),
-                                  validator: (value) {
-                                    if (value == null || value == '') {
-                                      return 'ID를 입력해주세요.';
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (value) {
-                                    _id = value;
-                                  },
-                                ),
-                                TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'Contact'),
-                                  validator: (value) {
-                                    if (value == null || value == '') {
-                                      return 'Contact를 입력해주세요.';
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (value) {
-                                    _contact = value;
-                                  },
-                                ),
-                                TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'E-mail'),
-                                  validator: (value) {
-                                    if (value == null || value == '') {
-                                      return 'E-mail을 입력해주세요.';
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (value) {
-                                    _email = value;
-                                  },
-                                ),
-                                TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'Name'),
-                                  validator: (value) {
-                                    if (value == null || value == '') {
-                                      return '이름을 입력해주세요.';
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (value) {
-                                    _name = value;
-                                  },
-                                ),
+                                _getTextFormFiled('ID'),
+                                _getTextFormFiled('Contact'),
+                                _getTextFormFiled('E-mail'),
+                                _getTextFormFiled('Name'),
                               ],
                             ),
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 16), 
 
                           ElevatedButton(
                             onPressed: () => {
@@ -172,18 +124,24 @@ class _SignUpFormState extends State<SignUpForm> {
         }));
   }
 
-  Widget _exitBtn() {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-    return Padding(
-        padding:
-            EdgeInsets.only(left: screenWidth * 0.01, top: screenHeight * 0.02),
-        child: GestureDetector(
-          onTap: () {
-            // 클릭이벤트
-            logger.d(' exit click ');
-          },
-          child: const Image(image: AppImages.exit2),
-        ));
+  TextFormField _getTextFormFiled(String formText) {
+    return  TextFormField (
+      decoration: InputDecoration(
+        labelText: formText ,
+        labelStyle: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 24.0,
+          color: AppColors.black
+        ),
+      ),validator: (value) {
+          if (value == null || value == '') {
+            return '$formText를 입력해주세요.';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          _id = value;
+        },
+    );
   }
 }
