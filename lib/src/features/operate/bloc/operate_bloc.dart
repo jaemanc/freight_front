@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:theme_freight_ui/src/common/logger.dart';
-import 'package:theme_freight_ui/src/operate/event/operate_event.dart';
-import 'package:theme_freight_ui/src/operate/repository/operate_repository.dart';
-import 'package:theme_freight_ui/src/operate/state/operate_state.dart';
+import 'package:theme_freight_ui/src/settings/logger.dart';
+import 'package:theme_freight_ui/src/features/operate/event/operate_event.dart';
+import 'package:theme_freight_ui/src/features/operate/repository/operate_repository.dart';
+import 'package:theme_freight_ui/src/features/operate/state/operate_state.dart';
 
 class OperateBloc extends Bloc<OperateEvent, OperateState> {
   final OperateRepository _operateRepository;
@@ -22,9 +22,13 @@ class OperateBloc extends Bloc<OperateEvent, OperateState> {
   void _fetchOperateList(FetchOperateList event, Emitter<OperateState> emit) async {
     try {
       emit(state.asLoading());
-      final data = await _operateRepository.fetchOperateList();
 
+      Map<String, dynamic> queryParameters = event.queryParameters;
+
+      final data = await _operateRepository.fetchOperateList(queryParameters);
+      logger.i(data);
       if (data.isNotEmpty) {
+        emit(state.fetchData(data));
         emit(state.asLoadSuccess());
       } else {
         emit(state.asLoadFailure(Exception('운행 목록이 없습니다.')));

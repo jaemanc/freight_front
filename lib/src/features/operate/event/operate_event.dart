@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
-import 'package:theme_freight_ui/src/operate/model/operate_model.dart';
+import 'package:theme_freight_ui/src/features/operate/model/operate_model.dart';
 
 abstract class OperateEvent extends Equatable {
   const OperateEvent();
@@ -7,7 +9,18 @@ abstract class OperateEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class FetchOperateList extends OperateEvent {}
+class FetchOperateList extends OperateEvent {
+  // final String date;
+  // final int size;
+  // final int page;
+  // final String token;
+  final Map<String, dynamic> queryParameters;
+  
+  FetchOperateList(this.queryParameters);
+
+  @override
+  List<Object?> get props => [this.queryParameters];
+}
 
 class UpdateOperate extends OperateEvent {
   final OperateEntity updatedOperate;

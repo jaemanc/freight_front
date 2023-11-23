@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:theme_freight_ui/src/user/model/user_entity.dart';
-import 'package:theme_freight_ui/src/common/logger.dart';
-import 'package:theme_freight_ui/src/user/state/authentication_state.dart';
+import 'package:theme_freight_ui/src/features/user/model/user_entity.dart';
+import 'package:theme_freight_ui/src/settings/logger.dart';
+import 'package:theme_freight_ui/src/features/user/state/authentication_state.dart';
 
-abstract class AuthenticationEvent extends Equatable{
+abstract class AuthenticationEvent extends Equatable {
   const AuthenticationEvent();
 }
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:theme_freight_ui/src/common/exit_button.dart';
-import 'package:theme_freight_ui/src/common/home_screen.dart';
-import 'package:theme_freight_ui/src/common/images.dart';
-import 'package:theme_freight_ui/src/common/logger.dart';
-import 'package:theme_freight_ui/src/theme/colors.dart';
-import 'package:theme_freight_ui/src/user/bloc/authentication_bloc.dart';
-import 'package:theme_freight_ui/src/user/event/authentication_event.dart';
-import 'package:theme_freight_ui/src/user/model/user_entity.dart';
-import 'package:theme_freight_ui/src/user/state/authentication_state.dart';
+import 'package:theme_freight_ui/src/common/ui/exit_button.dart';
+import 'package:theme_freight_ui/src/common/ui/home_screen.dart';
+import 'package:theme_freight_ui/src/settings/images.dart';
+import 'package:theme_freight_ui/src/settings/logger.dart';
+import 'package:theme_freight_ui/src/settings/theme/colors.dart';
+import 'package:theme_freight_ui/src/features/user/bloc/authentication_bloc.dart';
+import 'package:theme_freight_ui/src/features/user/event/authentication_event.dart';
+import 'package:theme_freight_ui/src/features/user/model/user_entity.dart';
+import 'package:theme_freight_ui/src/features/user/state/authentication_state.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

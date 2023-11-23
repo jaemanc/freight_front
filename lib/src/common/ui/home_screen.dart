@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:theme_freight_ui/src/common/exit_button.dart';
-import 'package:theme_freight_ui/src/common/images.dart';
+import 'package:theme_freight_ui/src/common/ui/exit_button.dart';
+import 'package:theme_freight_ui/src/settings/images.dart';
 import 'package:theme_freight_ui/src/common/routes.dart';
-import 'package:theme_freight_ui/src/common/setting.dart';
+import 'package:theme_freight_ui/src/common/ui/setting_screen.dart';
 import 'package:theme_freight_ui/src/common/util.dart';
-import 'package:theme_freight_ui/src/maintenance/screen/maintenance_screen.dart';
-import 'package:theme_freight_ui/src/operate/screen/operate_screen.dart';
-import 'package:theme_freight_ui/src/refuel/screen/refuel_screen.dart';
-import 'package:theme_freight_ui/src/spend/screen/spend_screen.dart';
-import 'package:theme_freight_ui/src/user/screen/authentication_screen.dart';
+import 'package:theme_freight_ui/src/features/maintenance/screen/maintenance_screen.dart';
+import 'package:theme_freight_ui/src/features/operate/screen/operate_screen.dart';
+import 'package:theme_freight_ui/src/features/refuel/screen/refuel_screen.dart';
+import 'package:theme_freight_ui/src/features/spend/screen/spend_screen.dart';
+import 'package:theme_freight_ui/src/features/user/screen/authentication_screen.dart';
 
-import 'logger.dart';
+import '../../settings/logger.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

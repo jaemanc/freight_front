@@ -1,11 +1,14 @@
-import 'package:theme_freight_ui/src/common/logger.dart';
+import 'dart:convert';
+
+import 'package:theme_freight_ui/src/settings/client.dart';
+import 'package:theme_freight_ui/src/settings/logger.dart';
 import 'package:theme_freight_ui/src/common/util.dart';
-import 'package:theme_freight_ui/src/operate/model/operate_model.dart';
-import 'package:theme_freight_ui/src/user/repository/authentication_repository.dart';
+import 'package:theme_freight_ui/src/features/operate/model/operate_model.dart';
+import 'package:theme_freight_ui/src/features/user/repository/authentication_repository.dart';
 
 
 abstract class OperateRepository {
-  Future<List<OperateEntity>> fetchOperateList();
+  Future<List<OperateEntity>> fetchOperateList(Map<String, dynamic> queryParameters);
   Future<OperateEntity> fetchOperateDetail(int operateId);
   Future<void> updateOperate(OperateEntity updatedOperate);
   Future<void> getOperateDetail(int operateId);
@@ -13,39 +16,31 @@ abstract class OperateRepository {
 }
 
 class OperateRepositoryImpl extends OperateRepository {
+  final _client = APIClient();
+  Util util = Util();
 
   @override
-  Future<List<OperateEntity>> fetchOperateList() async {
+  Future<List<OperateEntity>> fetchOperateList(Map<String, dynamic> queryParameters) async {
     try {
-      List<OperateEntity> operateList = [
-        OperateEntity(
-          loadingDate: DateTime.now(),
-          loadingPlace: '더미',
-          unloadingDate: DateTime.now(),
-          unloadingPlace: '더미더미',
-          loadingRatio: 80,
-          transportationCosts: 500,
-          transportationDate: DateTime.now(),
-          transportationType: 'Truck',
-          unitCost: 50,
-          extra: 'Extra Information 1',
-        ),
-        OperateEntity(
-          loadingDate: DateTime.now(),
-          loadingPlace: '더미',
-          unloadingDate: DateTime.now(),
-          unloadingPlace: '더미더미',
-          loadingRatio: 90,
-          transportationCosts: 600,
-          transportationDate: DateTime.now(),
-          transportationType: 'Ship',
-          unitCost: 60,
-          extra: 'Extra Information 2',
-        ),
-      ];
 
-      // 서버와 통신한다. 
-      return operateList;
+      final response = await _client.get('/api/v1/operate', queryParameters: queryParameters);
+      final status = response.statusCode;
+      
+      Map<String, dynamic> resultData = jsonDecode(utf8.decode(response.bodyBytes));
+      
+      final List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(resultData['data']);
+      List<OperateEntity> operateEntityList = data.map((json) => OperateEntity.fromJson(json)).toList();
+
+      logger.d('''
+        [GET]     : /api/v1/operate
+        [STATUS]   : $status
+        [RESPONSE] : $resultData
+        [RES_HEAD] : ${response.headers}
+        [RESULT]   : ${operateEntityList} 
+        [TOKEN]    : ${response.headers['authorization']}
+      ''');
+
+      return operateEntityList;
     } catch (e, stackTrace) {
       logger.e('Error in fetchOperateList: $e\n$stackTrace');
       return [];

@@ -1,21 +1,22 @@
 import 'package:equatable/equatable.dart';
-import 'package:theme_freight_ui/src/operate/model/operate_model.dart';
+import 'package:theme_freight_ui/src/features/operate/model/operate_model.dart';
+import 'package:theme_freight_ui/src/features/operate/state/operate_state.dart';
 
 enum OperateStateStatus { initial, loading, loadSuccess, loadFailure }
 
 class OperateState extends Equatable {
   final OperateStateStatus status;
-  final OperateEntity operateEntity;
+  final List<OperateEntity> data;
   final Exception? error;
 
   const OperateState({
-    this.status = OperateStateStatus.initial, 
-    this.operateEntity = const OperateEntity(),
-    this.error
+    this.status = OperateStateStatus.initial,
+    this.data =  const [],
+    this.error,
   });
 
   @override
-  List<Object?> get props => [status, operateEntity, error];
+  List<Object?> get props => [status, data, error];
 
   OperateState initial() {
     return copyWith(status: OperateStateStatus.initial);
@@ -29,16 +30,20 @@ class OperateState extends Equatable {
     return copyWith(status: OperateStateStatus.loadFailure, error: e);
   }
 
+  OperateState fetchData(List<OperateEntity> data) {
+    return copyWith(status: OperateStateStatus.loading, data: data);
+  }
+
   OperateState asLoadSuccess() {
     return copyWith(status: OperateStateStatus.loadSuccess);
   }
 
-  OperateState copyWith( {OperateStateStatus? status, OperateEntity? operateEntity, Exception? error
+  OperateState copyWith( {OperateStateStatus? status, List<OperateEntity>? data, Exception? error
   }) 
   {
     return OperateState(
         status: status ?? this.status,
-        operateEntity: operateEntity ?? this.operateEntity,
+        data: data ?? this.data,
         error: error ?? this.error);
   }
 

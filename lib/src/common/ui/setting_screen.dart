@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:theme_freight_ui/src/common/exit_button.dart';
-import 'package:theme_freight_ui/src/common/images.dart';
-import 'package:theme_freight_ui/src/common/logger.dart';
-import 'package:theme_freight_ui/src/user/screen/user_detail_screen.dart';
+import 'package:theme_freight_ui/src/common/ui/exit_button.dart';
+import 'package:theme_freight_ui/src/settings/images.dart';
+import 'package:theme_freight_ui/src/settings/logger.dart';
+import 'package:theme_freight_ui/src/features/user/screen/user_detail_screen.dart';
 
 class SettingButton extends StatelessWidget {
   const SettingButton({super.key});

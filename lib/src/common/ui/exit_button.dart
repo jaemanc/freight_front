@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:theme_freight_ui/src/common/images.dart';
+import 'package:theme_freight_ui/src/settings/images.dart';
 
 class ExitButton extends StatelessWidget{
   

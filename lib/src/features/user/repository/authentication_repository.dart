@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:theme_freight_ui/src/common/client.dart';
-import 'package:theme_freight_ui/src/common/logger.dart';
+import 'package:theme_freight_ui/src/settings/client.dart';
+import 'package:theme_freight_ui/src/settings/logger.dart';
 import 'package:theme_freight_ui/src/common/util.dart';
-import 'package:theme_freight_ui/src/user/model/user_entity.dart';
+import 'package:theme_freight_ui/src/features/user/model/user_entity.dart';
 
 abstract class AuthenticationRepository {
   Future<UserEntity> login(UserEntity userEntity);
