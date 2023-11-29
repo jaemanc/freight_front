@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:theme_freight_ui/src/common/ui/exit_button.dart';
 import 'package:theme_freight_ui/src/common/ui/home_screen.dart';
+import 'package:theme_freight_ui/src/features/user/model/user_enums.dart';
 import 'package:theme_freight_ui/src/settings/images.dart';
 import 'package:theme_freight_ui/src/settings/logger.dart';
 import 'package:theme_freight_ui/src/settings/theme/colors.dart';
@@ -18,7 +19,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _signUpState extends State<SignUp> {
-  // id / contact / e-mail / name // ok! geust!
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +85,10 @@ class _SignUpFormState extends State<SignUpForm> {
                             width: screenWidth * 0.5,
                             child: Column(
                               children: [
-                                _getTextFormFiled('ID'),
-                                _getTextFormFiled('Contact'),
-                                _getTextFormFiled('E-mail'),
-                                _getTextFormFiled('Name'),
+                                _getTextFormFiled('ID',SignUpEnum.id),
+                                _getTextFormFiled('Contact',SignUpEnum.contact),
+                                _getTextFormFiled('E-mail',SignUpEnum.email),
+                                _getTextFormFiled('Name',SignUpEnum.name),
                               ],
                             ),
                           ),
@@ -124,7 +124,7 @@ class _SignUpFormState extends State<SignUpForm> {
         }));
   }
 
-  TextFormField _getTextFormFiled(String formText) {
+  TextFormField _getTextFormFiled(String formText, SignUpEnum target) {
     return  TextFormField (
       decoration: InputDecoration(
         labelText: formText ,
@@ -133,15 +133,24 @@ class _SignUpFormState extends State<SignUpForm> {
           fontSize: 24.0,
           color: AppColors.black
         ),
-      ),validator: (value) {
-          if (value == null || value == '') {
-            return '$formText를 입력해주세요.';
-          }
-          return null;
-        },
-        onSaved: (value) {
+      ),
+      validator: (value) {
+        if (value == null || value == '') {
+          return '$formText를 입력해주세요.';
+        }
+        return null;
+      },
+      onSaved: (value) {
+        if (target == SignUpEnum.id) {
           _id = value;
-        },
+        } else if (target == SignUpEnum.contact) {
+          _contact = value;
+        } else if (target == SignUpEnum.email) {
+          _email = value;
+        } else if (target == SignUpEnum.name) {
+          _name = value;
+        }
+      },
     );
   }
 }

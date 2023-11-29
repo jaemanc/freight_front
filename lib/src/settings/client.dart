@@ -1,12 +1,17 @@
+import 'dart:html';
+import 'dart:js';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:theme_freight_ui/src/common/util.dart';
 import 'package:theme_freight_ui/src/features/user/model/user_entity.dart';
+import 'package:theme_freight_ui/src/features/user/screen/signup_screen.dart';
 
 class APIClient {
-
+  final util = Util();
   final host = dotenv.get('API_HOST');
-
   Uri getUri(String unencodedPath, { Map<String, dynamic>? queryParameters } ){
     
     return Uri.http(
@@ -18,8 +23,12 @@ class APIClient {
 
   Future<Map<String, String>> headers() async {
     final FlutterSecureStorage storage = FlutterSecureStorage();
-    String token = await storage.read(key: 'login') ?? dotenv.get('GUEST_TOKEN');
 
+    String token = '';
+    util.tokenGetter().then((value) {
+      token = value.toString();
+    });
+    
     return {
       'Authorization': token,
       'Content-Type': 'application/json',

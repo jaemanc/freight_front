@@ -19,7 +19,20 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   }
 
   void _login(Login event, Emitter<AuthenticationState> emit) async {
-    //_authenticationRepository.registration(state.userEntity);
+    try {
+      emit(state.asLoading());
+      final flag  =await _authenticationRepository.login(event.name, event.email, event.token);
+
+      if (flag) {
+        emit(state.asLoadSuccess());
+      } else {
+        emit(state.asLoadFailure(Exception('LOGIN FAIL')));
+      }
+
+    } on Exception catch(e, stackTrace) {
+      logger.e('$e $stackTrace');
+      emit(state.asLoadFailure(e));
+    }
   }
 
   void _guestLoginEvent(GuestLoginEvent event, Emitter<AuthenticationState> emit) async{

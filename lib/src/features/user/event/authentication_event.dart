@@ -13,8 +13,12 @@ class DefaultLoadAuthenticationEvent extends AuthenticationEvent {
 }
 
 class Login extends AuthenticationEvent {
+  final String name;
+  final String email;
+  final String token;
+  Login(this.name, this.email, this.token);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [name, email, token];
 }
 
 class NonMemberRegistration extends AuthenticationEvent {

@@ -8,7 +8,7 @@ import 'package:theme_freight_ui/src/common/util.dart';
 import 'package:theme_freight_ui/src/features/user/model/user_entity.dart';
 
 abstract class AuthenticationRepository {
-  Future<UserEntity> login(UserEntity userEntity);
+  Future<bool> login(String name, String email, String token);
   Future<UserEntity> registration(UserEntity userEntity);
   Future<UserEntity> guestLogin();
 }
@@ -50,9 +50,20 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<UserEntity> login(UserEntity userEntity) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<bool> login(String name, String email, String token) async {
+    final response = await _client.post('/api/v1/user/login');
+    final status = response.statusCode;
+
+    if (status == HttpStatus.ok) {
+      
+      Map<String, dynamic> resultData = jsonDecode(utf8.decode(response.bodyBytes));
+      String token = response.headers['authorization'].toString();
+      util.tokenSetter(token);
+
+      return true;
+    } else {
+      return false;
+    }
   }
   
   @override
