@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:theme_freight_ui/src/common/ui/exit_button.dart';
 import 'package:theme_freight_ui/src/common/ui/home_screen.dart';
+import 'package:theme_freight_ui/src/features/user/screen/login_screen.dart';
 import 'package:theme_freight_ui/src/settings/images.dart';
 import 'package:theme_freight_ui/src/settings/logger.dart';
 import 'package:theme_freight_ui/src/common/ui/setting_screen.dart';
@@ -78,7 +79,9 @@ class _loginState extends State<Login> {
     return Padding(
       padding: EdgeInsets.only(top: screenHeight * 0.07 ),
       child: ElevatedButton(
-        onPressed: () => {print('login btn!')},
+        onPressed: () => {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()))
+        },
         child: Text(' login ', style: TextStyle(fontSize: 40)),
         style: ElevatedButton.styleFrom(),
       ),

@@ -19,11 +19,7 @@ class Util {
     String? token = await storage.read(key: 'token');
     return token;
   }
-
-
 }
-
-
 
 class CalendarUtil extends StatefulWidget {
   @override
