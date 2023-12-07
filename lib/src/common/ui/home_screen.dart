@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:theme_freight_ui/src/common/ui/exit_button.dart';
+import 'package:theme_freight_ui/src/features/user/bloc/authentication_bloc.dart';
+import 'package:theme_freight_ui/src/features/user/event/authentication_event.dart';
 import 'package:theme_freight_ui/src/settings/images.dart';
 import 'package:theme_freight_ui/src/common/routes.dart';
 import 'package:theme_freight_ui/src/common/ui/setting_screen.dart';
@@ -21,7 +24,8 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends State<Home> {
-  Util uilt = Util();
+  Util util = Util();
+  AuthenticationBloc get authenticationbloc => context.read<AuthenticationBloc>();
   final GlobalKey<NestedScrollViewState> _scrollkey = GlobalKey();
 
   @override
@@ -34,16 +38,20 @@ class _Home extends State<Home> {
   }
 
   _asyncMethod() async {
-    var token = uilt.tokenGetter();
-    String? value = await token;
+    String token = '';
+    util.tokenGetter().then((value) {
+      token = value.toString();
+    });
 
-    if (value == null) {
+    if (token == null || token == '') {
       Future.microtask((){
         logger.i('사용자 정보를 알수 없으므로, 로그인 페이지로 이동합니다.');
-         Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+          // AuthenticateState를 loadSuccess 에서 다시 돌려야 한다. 
+        authenticationbloc.add(Init());
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
       });
     } else {
-      logger.i('사용자 정보를 확인했습니다. ${value}');
+      logger.i('사용자 정보를 확인했습니다. $token');
     }
   }
 

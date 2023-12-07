@@ -51,12 +51,25 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
 
   @override
   Future<bool> login(String name, String email, String token) async {
-    final response = await _client.post('/api/v1/user/login');
+    final requestBody = jsonEncode({
+      'name':name,
+      'email':email,
+      'jwt':token
+    });
+    
+    final response = await _client.login('/api/v1/user/login', body:requestBody, token: token);
     final status = response.statusCode;
 
+    logger.d('''
+      [POST]     : /api/v1/user/login
+      [REQ BODY] : ${requestBody}
+      [STATUS]   : $status
+      [RESPONSE] : ${response.body}
+      [RES_HEAD] : ${response.headers}
+      [TOKEN]    : ${response.headers['authorization']}
+      ''');
+
     if (status == HttpStatus.ok) {
-      
-      Map<String, dynamic> resultData = jsonDecode(utf8.decode(response.bodyBytes));
       String token = response.headers['authorization'].toString();
       util.tokenSetter(token);
 

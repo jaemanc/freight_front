@@ -84,7 +84,7 @@ class _loginScreen extends State<LoginScreen> {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save(),
                               //Call Login API
-                              authenticationbloc.add(Login(
+                              authenticationbloc.add(LoginEvent(
                                 _name, _email, _token,
                               )),
                             }
@@ -98,7 +98,7 @@ class _loginScreen extends State<LoginScreen> {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save(),
                               //Call Login API
-                              authenticationbloc.add(Login(
+                              authenticationbloc.add(LoginEvent(
                                 _name, _email, _token,
                               )),
                             }
