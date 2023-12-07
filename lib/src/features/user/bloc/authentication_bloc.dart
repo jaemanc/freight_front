@@ -13,12 +13,13 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   AuthenticationBloc(this._authenticationRepository)
       : super(InitAuthenticationBloc()) {
-    on<Login>(_login);
+    on<LoginEvent>(_login);
     on<Registration>(_registration);
     on<GuestLoginEvent>(_guestLoginEvent);
+    on<Init>(_init);
   }
 
-  void _login(Login event, Emitter<AuthenticationState> emit) async {
+  void _login(LoginEvent event, Emitter<AuthenticationState> emit) async {
     try {
       emit(state.asLoading());
       final flag  =await _authenticationRepository.login(event.name, event.email, event.token);
@@ -69,6 +70,11 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       emit(state.asLoadFailure(e));
     }
   }
+
+  void _init(Init event, Emitter<AuthenticationState> emit) {
+      emit(state.asLoading());
+    }
+
 }
 
 class InitAuthenticationBloc extends AuthenticationState {

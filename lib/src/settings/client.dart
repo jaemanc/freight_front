@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:theme_freight_ui/src/common/util.dart';
 import 'package:theme_freight_ui/src/features/user/model/user_entity.dart';
 import 'package:theme_freight_ui/src/features/user/screen/signup_screen.dart';
+import 'package:theme_freight_ui/src/settings/logger.dart';
 
 class APIClient {
   final util = Util();
@@ -29,6 +30,8 @@ class APIClient {
       token = value.toString();
     });
     
+    logger.i('request tkn : $token');
+
     return {
       'Authorization': token,
       'Content-Type': 'application/json',
@@ -57,6 +60,23 @@ class APIClient {
         endpoint,
       ),
       headers: await headers(),
+      body: body
+    );
+    return res;
+  }
+
+  Future<http.Response> login(String endpoint, {Object? body, String? token} ) async {
+    http.Response res = 
+    await http.post(
+      getUri(
+        endpoint,
+      ),
+      headers: {
+        'Authorization': token!,
+        'Content-Type': 'application/json',
+        'accept': '*/*',
+        'Accept-Charset': 'utf-8'
+      },
       body: body
     );
     return res;

@@ -12,11 +12,11 @@ class DefaultLoadAuthenticationEvent extends AuthenticationEvent {
   List<Object?> get props => [];
 }
 
-class Login extends AuthenticationEvent {
+class LoginEvent extends AuthenticationEvent {
   final String name;
   final String email;
   final String token;
-  Login(this.name, this.email, this.token);
+  LoginEvent(this.name, this.email, this.token);
   @override
   List<Object?> get props => [name, email, token];
 }
@@ -46,4 +46,9 @@ class GuestLoginEvent extends AuthenticationEvent {
   @override
   List<Object?> get props => [];
 
+}
+
+class Init extends AuthenticationEvent {
+  @override
+  List<Object?> get props => [];
 }
