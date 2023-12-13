@@ -65,6 +65,23 @@ class APIClient {
     return res;
   }
 
+  Future<http.Response> geustLogin(String endpoint, {Object? body} ) async {
+        http.Response res = 
+    await http.post(
+      getUri(
+        endpoint,
+      ),
+      headers: {
+        'Authorization': '',
+        'Content-Type': 'application/json',
+        'accept': '*/*',
+        'Accept-Charset': 'utf-8'
+      },
+      body: body
+    );
+    return res;
+  }
+
   Future<http.Response> login(String endpoint, {Object? body, String? token} ) async {
     http.Response res = 
     await http.post(
