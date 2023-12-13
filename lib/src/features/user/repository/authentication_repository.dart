@@ -82,7 +82,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   @override
   Future<UserEntity> guestLogin() async {
     
-    final response = await _client.post('/api/v1/user/non-member-registration');
+    final response = await _client.geustLogin('/api/v1/user/non-member-registration');
     final status = response.statusCode;
     bool loginFlag = false;
 

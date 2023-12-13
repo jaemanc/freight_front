@@ -43,8 +43,10 @@ class _Home extends State<Home> {
       token = value.toString();
     });
 
+    // 토큰의 세팅이 늦게 되는 경우가 있으므로 token 의 상태를 지속적으로 감지 해야 함. 
+
     if (token == null || token == '') {
-      Future.microtask((){
+      await Future.microtask((){
         logger.i('사용자 정보를 알수 없으므로, 로그인 페이지로 이동합니다.');
           // AuthenticateState를 loadSuccess 에서 다시 돌려야 한다. 
         authenticationbloc.add(Init());

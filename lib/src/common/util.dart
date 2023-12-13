@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_month_year_picker/custom.dialog.dart';
 import 'package:simple_month_year_picker/month.container.dart';
 import 'package:simple_month_year_picker/month.model.dart';
+import 'package:theme_freight_ui/src/settings/logger.dart';
 
 class Util {
   final storage = const FlutterSecureStorage();
@@ -13,6 +14,7 @@ class Util {
   void tokenSetter(String token) async{
     storage.write(key: 'token', value: token);
     String? temp = await storage.read(key:'token');
+    logger.i('setting tkn : $temp');
   }
 
   Future<String?> tokenGetter() async {
