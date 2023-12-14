@@ -31,20 +31,14 @@ class _Home extends State<Home> {
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _asyncMethod();
-    });
   }
 
+  // init 시점에서 버튼을 누르는 시점으로 변경.
   _asyncMethod() async {
     String token = '';
     util.tokenGetter().then((value) {
       token = value.toString();
     });
-
-    // 토큰의 세팅이 늦게 되는 경우가 있으므로 token 의 상태를 지속적으로 감지 해야 함. 
-
     if (token == null || token == '') {
       await Future.microtask((){
         logger.i('사용자 정보를 알수 없으므로, 로그인 페이지로 이동합니다.');
@@ -67,11 +61,11 @@ class _Home extends State<Home> {
         key: _scrollkey,
         child: Column(
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ExitButton(),
-                const SettingButton(),
+                SizedBox(),
+                SettingButton(),
               ],
             ),
             SizedBox(
@@ -112,6 +106,7 @@ class _Home extends State<Home> {
     double screenWidth = MediaQuery.of(context).size.width;
     return InkWell (
         onTap: () {
+          _asyncMethod();
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const Operate())
@@ -139,6 +134,7 @@ class _Home extends State<Home> {
     double screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
+        _asyncMethod();
         Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Refuel())
@@ -164,9 +160,9 @@ class _Home extends State<Home> {
   Widget _spend() {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-
     return  InkWell(
       onTap: () {
+        _asyncMethod();
         Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Spend())
@@ -194,6 +190,7 @@ class _Home extends State<Home> {
     double screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
+        _asyncMethod();
         Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Maintenance())
